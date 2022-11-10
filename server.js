@@ -15,8 +15,9 @@ app.listen(3001, () => {
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb+srv://EmmaLoisel:toucan@cluster0.y10v2kc.mongodb.net/?retryWrites=true&w=majority';
 const dbName = 'quizzApi';
+const client = new MongoClient(url)
 let db
-MongoClient.connect(url, function(err, client) {
+MongoClient.connect(client, function(err, client) {
   console.log("Connected successfully to server");
   db = client.db(dbName);
 });
