@@ -1,7 +1,6 @@
 const express = require("express");
 var cors = require('cors')
 const app = express();
-var db = require('mongodb').Db
 
 app.use(express.json());
  
@@ -16,15 +15,15 @@ app.listen(3001, () => {
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb+srv://EmmaLoisel:toucan@cluster0.y10v2kc.mongodb.net/?retryWrites=true&w=majority';
 const dbName = 'quizzApi';
-let dbb
+let db
 MongoClient.connect(url, function(err, client) {
   console.log("Connected successfully to server");
-  dbb = client.db(dbName);
+  db = client.db(dbName);
 });
 
 app.get('/quizz', cors(), async (req,res) => {
   try {
-      const docs = await dbb.collection('quizz').find({}).toArray()
+      const docs = await db.collection('quizz').find({}).toArray()
       res.status(200).json(docs)
   } catch (err) {
       console.log(err)
@@ -35,7 +34,7 @@ app.get('/quizz', cors(), async (req,res) => {
 app.get('/quizz/:id', cors(), async (req,res) => {
   const id = parseInt(req.params.id)
   try {
-      const docs = await dbb.collection('quizz').findOne({id})
+      const docs = await db.collection('quizz').findOne({id})
       res.status(200).json(docs)
   } catch (err) {
       console.log(err)
@@ -46,7 +45,7 @@ app.get('/quizz/:id', cors(), async (req,res) => {
 app.post('/quizz', cors(), async (req,res) => {
   try {
       const quizzData = req.body
-      const quizz = await dbb.collection('quizz').insertOne(quizzData)
+      const quizz = await db.collection('quizz').insertOne(quizzData)
       res.status(200).json(quizz)
   } catch (err) {
       console.log(err)
@@ -58,7 +57,7 @@ app.put('/quizz/:id', cors(), async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const replacementquizz = req.body
-      const quizz = await dbb.collection('quizz').replaceOne({id},replacementquizz)
+      const quizz = await db.collection('quizz').replaceOne({id},replacementquizz)
       res.status(200).json(quizz)
   } catch (err) {
       console.log(err)
@@ -70,7 +69,7 @@ app.patch('/quizz/:id', cors(), async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const replacementquizz = req.body
-      const quizz = await dbb.collection('quizz').updateOne({id}, {$set: replacementquizz}, {upsert:true})
+      const quizz = await db.collection('quizz').updateOne({id}, {$set: replacementquizz}, {upsert:true})
       res.status(200).json(quizz)
   } catch (err) {
       console.log(err)
@@ -81,7 +80,7 @@ app.patch('/quizz/:id', cors(), async (req,res) => {
 app.delete('/quizz/:id', cors(), async (req,res) => {
   try {
       const id = parseInt(req.params.id)
-      const quizz = await dbb.collection('quizz').deleteOne({id})
+      const quizz = await db.collection('quizz').deleteOne({id})
       res.status(200).json(quizz)
   } catch (err) {
       console.log(err)
