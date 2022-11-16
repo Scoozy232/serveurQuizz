@@ -2,6 +2,7 @@ const express = require("express");
 var cors = require('cors')
 const app = express();
 
+app.use(cors())
 app.use(express.json());
 var port = process.env.PORT || 3001;
 app.listen(port, () => {
@@ -27,7 +28,7 @@ MongoClient.connect(url, function(err, client) {
   db = client.db(dbName);
 });
 
-app.get('/quizz', cors(), async (req,res) => {
+app.get('/quizz', async (req,res) => {
   try {
       const docs = await db.collection('quizz').find({}).toArray()
       res.status(200).json(docs)
@@ -37,7 +38,7 @@ app.get('/quizz', cors(), async (req,res) => {
   }
 })
 
-app.get('/quizz/:id', cors(), async (req,res) => {
+app.get('/quizz/:id', async (req,res) => {
   const id = parseInt(req.params.id)
   try {
       const docs = await db.collection('quizz').findOne({id})
@@ -48,7 +49,7 @@ app.get('/quizz/:id', cors(), async (req,res) => {
   }
 })
 
-app.post('/quizz', cors(), async (req,res) => {
+app.post('/quizz', async (req,res) => {
   try {
       const quizzData = req.body
       const quizz = await db.collection('quizz').insertOne(quizzData)
@@ -59,7 +60,7 @@ app.post('/quizz', cors(), async (req,res) => {
   }
   
 })
-app.put('/quizz/:id', cors(), async (req,res) => {
+app.put('/quizz/:id', async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const replacementquizz = req.body
@@ -71,7 +72,7 @@ app.put('/quizz/:id', cors(), async (req,res) => {
   }
 })
 
-app.patch('/quizz/:id', cors(), async (req,res) => {
+app.patch('/quizz/:id', async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const replacementquizz = req.body
@@ -83,7 +84,7 @@ app.patch('/quizz/:id', cors(), async (req,res) => {
   } 
 })
 
-app.delete('/quizz/:id', cors(), async (req,res) => {
+app.delete('/quizz/:id', async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const quizz = await db.collection('quizz').deleteOne({id})
@@ -95,7 +96,7 @@ app.delete('/quizz/:id', cors(), async (req,res) => {
 })
 
 
-app.get('/user', cors(), async (req,res) => {
+app.get('/user', async (req,res) => {
   try {
       const docs = await db.collection('user').find({}).toArray()
       res.status(200).json(docs)
@@ -105,7 +106,7 @@ app.get('/user', cors(), async (req,res) => {
   }
 })
 
-app.get('/user/:id', cors(), async (req,res) => {
+app.get('/user/:id', async (req,res) => {
   const id = parseInt(req.params.id)
   try {
       const docs = await db.collection('user').findOne({id})
@@ -116,7 +117,7 @@ app.get('/user/:id', cors(), async (req,res) => {
   }
 })
 
-app.post('/user', cors(), async (req,res) => {
+app.post('/user', async (req,res) => {
   try {
       const userData = req.body
       const user = await db.collection('user').insertOne(userData)
@@ -127,7 +128,7 @@ app.post('/user', cors(), async (req,res) => {
   }
   
 })
-app.put('/user/:id', cors(), async (req,res) => {
+app.put('/user/:id', async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const replacementuser = req.body
@@ -139,7 +140,7 @@ app.put('/user/:id', cors(), async (req,res) => {
   }
 })
 
-app.patch('/user/:id', cors(), async (req,res) => {
+app.patch('/user/:id', async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const replacementuser = req.body
@@ -151,7 +152,7 @@ app.patch('/user/:id', cors(), async (req,res) => {
   } 
 })
 
-app.delete('/user/:id', cors(), async (req,res) => {
+app.delete('/user/:id', async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const user = await db.collection('user').deleteOne({id})
@@ -163,7 +164,7 @@ app.delete('/user/:id', cors(), async (req,res) => {
 })
 
 
-app.get('/userQuizz', cors(), async (req,res) => {
+app.get('/userQuizz', async (req,res) => {
   try {
       const docs = await db.collection('userQuizz').find({}).toArray()
       res.status(200).json(docs)
@@ -173,7 +174,7 @@ app.get('/userQuizz', cors(), async (req,res) => {
   }
 })
 
-app.get('/userQuizz/:id', cors(), async (req,res) => {
+app.get('/userQuizz/:id', async (req,res) => {
   const id = parseInt(req.params.id)
   try {
       const docs = await db.collection('userQuizz').findOne({id})
@@ -184,7 +185,7 @@ app.get('/userQuizz/:id', cors(), async (req,res) => {
   }
 })
 
-app.post('/userQuizz', cors(), async (req,res) => {
+app.post('/userQuizz', async (req,res) => {
   try {
       const userQuizzData = req.body
       const userQuizz = await db.collection('userQuizz').insertOne(userQuizzData)
@@ -195,7 +196,7 @@ app.post('/userQuizz', cors(), async (req,res) => {
   }
   
 })
-app.put('/userQuizz/:id', cors(), async (req,res) => {
+app.put('/userQuizz/:id', async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const replacementuserQuizz = req.body
@@ -207,7 +208,7 @@ app.put('/userQuizz/:id', cors(), async (req,res) => {
   }
 })
 
-app.patch('/userQuizz/:id', cors(), async (req,res) => {
+app.patch('/userQuizz/:id', async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const replacementuserQuizz = req.body
@@ -219,7 +220,7 @@ app.patch('/userQuizz/:id', cors(), async (req,res) => {
   } 
 })
 
-app.delete('/userQuizz/:id', cors(), async (req,res) => {
+app.delete('/userQuizz/:id', async (req,res) => {
   try {
       const id = parseInt(req.params.id)
       const userQuizz = await db.collection('userQuizz').deleteOne({id})
